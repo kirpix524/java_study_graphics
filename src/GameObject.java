@@ -6,6 +6,7 @@ public  class GameObject {
 
     private int scoreAmount;
     private int objectType;
+    private boolean isPackManHere;
 
     public GameObject(int objectType, int scoreAmount) {
         init(objectType, scoreAmount);
@@ -47,6 +48,24 @@ public  class GameObject {
         return objectType;
     }
 
+    public boolean isPackManHere() {
+        return isPackManHere;
+    }
+
+    public void packManGoesIn() {
+        isPackManHere = true;
+    }
+
+    public void packManGoesOut() {
+        packManGoesOut(0);
+    }
+    public void packManGoesOut(int teleport) {
+        isPackManHere = false;
+        if (teleport!=1) {
+            this.changeObjectType(TYPE_EMPTY, 0);
+        }
+    }
+
     private void init(int objectType, int scoreAmount) {
         this.objectType = correctObjectType(objectType);
         this.scoreAmount = correctScoreAmount(scoreAmount);
@@ -65,5 +84,6 @@ public  class GameObject {
         }
         return scoreAmount;
     }
+
 
 }

@@ -45,7 +45,7 @@ public class PackMan {
         this.positionX = x;
         this.positionY = y;
         this.size = size;
-        this.stepSize = (int) (size * 1.5);
+        this.stepSize = (int) (size * 2.0);
         this.direction = direction;
         this.state = state;
         setBorderCoordinates(borderX, borderY, borderWidth, borderHeight);
@@ -109,7 +109,7 @@ public class PackMan {
         positionY += difY;
     }
 
-    private void changeDirection(int newDirection) {
+    public void changeDirection(int newDirection) {
         this.direction = newDirection;
     }
 
@@ -175,5 +175,15 @@ public class PackMan {
     public void setBorders(Graphics g, int borderX, int borderY, int borderWidth, int borderHeight) {
         setBorderCoordinates(borderX,borderY,borderWidth,borderHeight);
         putPackManInTheField(g, positionX, positionY);
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void changePackmanCoordinates(int newX, int newY) {
+        int difX = newX - positionX;
+        int difY = newY - positionY;
+        changePosition(difX, difY);
     }
 }

@@ -8,13 +8,14 @@ import java.awt.event.MouseEvent;
 public class FormMain extends JFrame {
     private Graphics g;
     private PackMan packMan;
+    private Board board;
     private int wallX = 30;
     private int wallY = 50;
     private int wallHeight = 500;
     private int wallWidth = 1000;
 
     public FormMain() {
-        setTitle("Main form for java graphics learn");
+        setTitle("Packman");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(10, 10, 1300, 700);
         setVisible(true);
@@ -22,8 +23,12 @@ public class FormMain extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                g = getGraphics();
-                packMan.putPackManInTheField(g, e.getX(), e.getY());
+                if (e.getButton()==MouseEvent.BUTTON1) {
+
+                    g = getGraphics();
+                }
+
+                //packMan.putPackManInTheField(g, e.getX(), e.getY());
             }
         });
         addKeyListener(new KeyAdapter() {
@@ -33,16 +38,16 @@ public class FormMain extends JFrame {
                 g = getGraphics();
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_DOWN:
-                        packMan.movePackMan(g, packMan.DIRECTION_SOUTH);
+                        board.movePackMan(g,packMan, PackMan.DIRECTION_SOUTH);
                         break;
                     case KeyEvent.VK_UP:
-                        packMan.movePackMan(g, packMan.DIRECTION_NORTH);
+                        board.movePackMan(g,packMan, PackMan.DIRECTION_NORTH);
                         break;
                     case KeyEvent.VK_RIGHT:
-                        packMan.movePackMan(g, packMan.DIRECTION_EAST);
+                        board.movePackMan(g,packMan, PackMan.DIRECTION_EAST);
                         break;
                     case KeyEvent.VK_LEFT:
-                        packMan.movePackMan(g, packMan.DIRECTION_WEST);
+                        board.movePackMan(g,packMan, PackMan.DIRECTION_WEST);
                         break;
                     default:
                         return;
@@ -62,7 +67,10 @@ public class FormMain extends JFrame {
         g = getGraphics();
 
         packMan = new PackMan(0, 0, 20);
-        packMan.setBorders(g, wallX, wallY, wallWidth, wallHeight);
+        //packMan.setBorders(g, wallX, wallY, wallWidth, wallHeight);
+        board = new Board(25,14, packMan.getSize(), 1);
+        board.setPackMan(packMan, 0,0);
+        board.drawBoard(g,packMan);
 
 //        add(buttonStart, BorderLayout.NORTH);
 //        add(labelStart,BorderLayout.CENTER);
@@ -72,7 +80,8 @@ public class FormMain extends JFrame {
     }
 
     public void paint(Graphics my_picture) {
-        my_picture.drawRect(wallX, wallY, wallWidth, wallHeight);
+//        my_picture.drawLine(10,40, 1000,40);
+//        my_picture.drawRect(wallX, wallY, wallWidth, wallHeight);
 //        my_picture.clearRect(0, 0, 1, 1);
 //        my_picture.drawLine(0,10,100,10);
 //        int sizeX = 3;
