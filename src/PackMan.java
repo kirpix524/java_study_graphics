@@ -1,13 +1,13 @@
 import java.awt.*;
 
 public class PackMan {
-    public final int DIRECTION_EAST = 0;
-    public final int DIRECTION_NORTH = 1;
-    public final int DIRECTION_WEST = 2;
-    public final int DIRECTION_SOUTH = 3;
+    public static final int DIRECTION_EAST = 0;
+    public static final int DIRECTION_NORTH = 1;
+    public static final int DIRECTION_WEST = 2;
+    public static final int DIRECTION_SOUTH = 3;
 
-    public final int STATE_OPENED = 0;
-    public final int STATE_CLOSED = 1;
+    public static final int STATE_OPENED = 0;
+    public static final int STATE_CLOSED = 1;
 
     private int stepSize;
 
