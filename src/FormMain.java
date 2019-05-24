@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class FormMain extends JFrame {
     private Graphics g;
@@ -24,8 +21,7 @@ public class FormMain extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getButton()==MouseEvent.BUTTON1) {
-
-                    g = getGraphics();
+//                    g = getGraphics();
                 }
 
                 //packMan.putPackManInTheField(g, e.getX(), e.getY());
@@ -54,6 +50,49 @@ public class FormMain extends JFrame {
                 }
             }
         });
+
+        CardLayout cardLayout = new CardLayout();
+        JPanel jpBottom = new JPanel(cardLayout);
+        add(jpBottom, BorderLayout.SOUTH);
+        //---------------panel for main menu----------------------
+        JPanel jpMainMenu = new JPanel(new GridLayout());
+        //Button startNewGame
+        JButton jbStart = new JButton("Начать новую игру");
+        jbStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(jpBottom, "jpPlaying");
+            }
+        });
+        jpMainMenu.add(jbStart);
+        //button editMap
+        JButton jbEditMap = new JButton("Редактировать поле");
+        jbEditMap.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        jpMainMenu.add(jbEditMap);
+        //button Exit
+
+
+        //--------------panel while playing-----------------------
+        JPanel jpPlaying = new JPanel(new GridLayout());
+        //button restartGame
+
+        //button backToMainMenu
+
+        //--------------panel for map editor----------------------
+        //button load from file
+
+        //button save to file
+
+        //button backToMenu
+
+
+
+
         init();
 
     }

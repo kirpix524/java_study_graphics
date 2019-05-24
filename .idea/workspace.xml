@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec48d7c4-0469-41d4-90ea-7fecc3d65ff1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FormMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FormMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PackMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PackMan.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,15 +25,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FormMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="44" column="30" lean-forward="true" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+            <state relative-caret-position="432">
+              <caret line="75" column="34" lean-forward="true" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#628#986#0" expanded="true" />
                 <element signature="e#985#986#0" expanded="true" />
+                <element signature="e#2299#2300#0" expanded="true" />
+                <element signature="e#2340#2341#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PackMan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="81" selection-start-line="81" selection-end-line="81" />
+            <state relative-caret-position="26">
+              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
               <folding>
                 <element signature="e#548#549#0" expanded="true" />
                 <element signature="e#618#619#0" expanded="true" />
@@ -68,7 +67,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="13">
@@ -128,8 +127,8 @@
         <option value="$PROJECT_DIR$/src/Forms/FormMain.java" />
         <option value="$PROJECT_DIR$/src/GameObject.java" />
         <option value="$PROJECT_DIR$/src/PackMan.java" />
-        <option value="$PROJECT_DIR$/src/FormMain.java" />
         <option value="$PROJECT_DIR$/src/Board.java" />
+        <option value="$PROJECT_DIR$/src/FormMain.java" />
       </list>
     </option>
   </component>
@@ -337,18 +336,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FormMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="44" column="30" lean-forward="true" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#628#986#0" expanded="true" />
-            <element signature="e#985#986#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GameObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -370,10 +357,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="99" column="41" lean-forward="true" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+          <folding>
+            <element signature="e#185#186#0" expanded="true" />
+            <element signature="e#230#231#0" expanded="true" />
+            <element signature="method#drawWall#0;class#Board#0" />
+            <element signature="method#drawFilledDot#0;class#Board#0" />
+            <element signature="method#drawBonus#0;class#Board#0" />
+            <element signature="method#correctField#0;class#Board#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/PackMan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        <state relative-caret-position="26">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
           <folding>
             <element signature="e#548#549#0" expanded="true" />
             <element signature="e#618#619#0" expanded="true" />
@@ -394,17 +396,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/FormMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="99" column="41" lean-forward="true" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+        <state relative-caret-position="432">
+          <caret line="75" column="34" lean-forward="true" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
           <folding>
-            <element signature="e#185#186#0" expanded="true" />
-            <element signature="e#230#231#0" expanded="true" />
-            <element signature="method#drawWall#0;class#Board#0" />
-            <element signature="method#drawFilledDot#0;class#Board#0" />
-            <element signature="method#drawBonus#0;class#Board#0" />
-            <element signature="method#correctField#0;class#Board#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#628#986#0" expanded="true" />
+            <element signature="e#985#986#0" expanded="true" />
+            <element signature="e#2299#2300#0" expanded="true" />
+            <element signature="e#2340#2341#0" expanded="true" />
           </folding>
         </state>
       </provider>
