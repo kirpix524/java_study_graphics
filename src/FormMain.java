@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class FormMain extends JFrame {
+public class FormMain extends JFrame{
     private Graphics g;
+    private int keyNum = 0;
     private PackMan packMan;
     private Board board;
     private int wallX = 30;
@@ -11,167 +12,223 @@ public class FormMain extends JFrame {
     private int wallHeight = 500;
     private int wallWidth = 1000;
 
+    private class MyKeyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID()==KeyEvent.KEY_PRESSED) {
+                return actKeyPressed(e.getKeyCode());
+            }
+            return false;
+        }
+    }
+
+    private Font btnFont = new Font("Times New Roman", Font.PLAIN, 16);
     public FormMain() {
+        setSize(1300, 700);
+        setResizable(false);
+        setLocation(10, 10);
+
         setTitle("Packman");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(10, 10, 1300, 700);
+
+//        setBounds(10, 10, 1300, 700);
+
+//        initListeners();
+
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new MyKeyDispatcher());
+
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                JOptionPane.showMessageDialog(new JFrame(), "key "+e.getKeyCode()+" pressed");
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
         setVisible(true);
-        addMouseListener(new MouseAdapter() {
+        init();
+        initMenu();
+
+    }
+
+    private void initListeners() {
+        this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (e.getButton()==MouseEvent.BUTTON1) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    String msg = "x: " + e.getX() + " y:" + e.getY();
+                    JOptionPane.showMessageDialog(new JFrame(), msg);
 //                    g = getGraphics();
                 }
 
                 //packMan.putPackManInTheField(g, e.getX(), e.getY());
             }
         });
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                g = getGraphics();
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_DOWN:
-                        board.movePackMan(g,packMan, PackMan.DIRECTION_SOUTH);
-                        break;
-                    case KeyEvent.VK_UP:
-                        board.movePackMan(g,packMan, PackMan.DIRECTION_NORTH);
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        board.movePackMan(g,packMan, PackMan.DIRECTION_EAST);
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        board.movePackMan(g,packMan, PackMan.DIRECTION_WEST);
-                        break;
-                    default:
-                        return;
-                }
-            }
-        });
+    }
 
-        CardLayout cardLayout = new CardLayout();
-        JPanel jpBottom = new JPanel(cardLayout);
-        add(jpBottom, BorderLayout.SOUTH);
+    private void initMenu() {
+        JPanel jpBottom = addBottomMenu();
+        jpBottom.setFocusable(false);
+        //init panels
         //---------------panel for main menu----------------------
+        JPanel jpMainMenu = addMainMenu(jpBottom);
+        jpMainMenu.setFocusable(false);
+        jpBottom.add(jpMainMenu, "jpMainMenu");
+        //--------------panel while playing-----------------------
+        JPanel jpPlaying = addPlayMenu(jpBottom);
+        jpPlaying.setFocusable(false);
+        jpBottom.add(jpPlaying, "jpPlaying");
+        //--------------panel for map editor----------------------
+        JPanel jpEditMap = addEditorMenu(jpBottom);
+        jpEditMap.setFocusable(false);
+        jpBottom.add(jpEditMap, "jpEditMap");
+//        Show card layout
+        ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpMainMenu");
+    }
+
+    private JPanel addBottomMenu() {
+        JPanel jpBottom = new JPanel(new CardLayout());  //Creating object for panel, which will contain menus
+        jpBottom.setPreferredSize(new Dimension(1, 60));  //setting preferred size
+        jpBottom.setFocusable(false);
+        this.add(jpBottom, BorderLayout.SOUTH); //add bottom panel to the form
+        return jpBottom;
+    }
+
+    private JPanel addMainMenu(JPanel jpBottom) {
         JPanel jpMainMenu = new JPanel(new GridLayout());
         //Button startNewGame
         JButton jbStart = new JButton("Начать новую игру");
-        jbStart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(jpBottom, "jpPlaying");
-            }
+        jbStart.setFont(btnFont);
+        jbStart.setFocusable(false);
+        jbStart.addActionListener(e -> {
+            ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpPlaying");
+            newGame();
         });
         jpMainMenu.add(jbStart);
         //button editMap
         JButton jbEditMap = new JButton("Редактировать поле");
-        jbEditMap.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        jbEditMap.setFont(btnFont);
+        jbEditMap.setFocusable(false);
+        jbEditMap.addActionListener(e -> {
+            ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpEditMap");
 
-            }
         });
         jpMainMenu.add(jbEditMap);
         //button Exit
+        JButton jbExit = new JButton("Выход");
+        jbExit.setFont(btnFont);
+        jbExit.setFocusable(false);
+        jbExit.addActionListener(e -> {
+            System.exit(0);
+        });
+        jpMainMenu.add(jbExit);
+        return jpMainMenu;
+    }
 
-
-        //--------------panel while playing-----------------------
+    private JPanel addPlayMenu(JPanel jpBottom) {
         JPanel jpPlaying = new JPanel(new GridLayout());
         //button restartGame
+        JButton jbRestart = new JButton("Начать заново");
+        jbRestart.setFont(btnFont);
+        jbRestart.setFocusable(false);
+        jbRestart.addActionListener(e -> {
+            newGame();
+        });
+        jpPlaying.add(jbRestart);
+        //button changeMap
+        JButton jbChangeMap = new JButton("Изменить карту");
+        jbChangeMap.setFont(btnFont);
+        jbChangeMap.setFocusable(false);
+        jbChangeMap.addActionListener(e -> {
 
+        });
+        jpPlaying.add(jbChangeMap);
         //button backToMainMenu
+        JButton jbBackToMainMenu = new JButton("Вернуться в основное меню");
+        jbBackToMainMenu.setFocusable(false);
+        jbBackToMainMenu.addActionListener(e -> {
+            ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpMainMenu");
+        });
+        jpPlaying.add(jbBackToMainMenu);
+        return jpPlaying;
+    }
 
-        //--------------panel for map editor----------------------
+    private JPanel addEditorMenu(JPanel jpBottom) {
+        JPanel jpEditMap = new JPanel(new GridLayout());
         //button load from file
+        JButton jbLoadMapFromFile = new JButton("Загрузить из файла");
+        jbLoadMapFromFile.setFont(btnFont);
+        jbLoadMapFromFile.addActionListener(e -> {
 
+        });
+        jpEditMap.add(jbLoadMapFromFile);
         //button save to file
+        JButton jbSaveMapToFile = new JButton("Сохранить в файл");
+        jbSaveMapToFile.setFont(btnFont);
+        jbSaveMapToFile.addActionListener(e -> {
 
+        });
+        jpEditMap.add(jbSaveMapToFile);
         //button backToMenu
+        JButton jbBackToMainMenu = new JButton("Вернуться в основное меню");
+        jbBackToMainMenu.setFont(btnFont);
+        jbBackToMainMenu.addActionListener(e -> {
+            ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpMainMenu");
+        });
+        jpEditMap.add(jbBackToMainMenu);
+        return jpEditMap;
+    }
 
-
-
-
-        init();
+    @Override
+    public void paint(Graphics g) {
 
     }
 
     private void init() {
-        JButton buttonStart = new JButton("Start");
-        JLabel labelStart = new JLabel("");
-        labelStart.setHorizontalAlignment(JLabel.CENTER);
-        setLayout(new BorderLayout());
 
-        g = getGraphics();
+    }
 
+    private void newGame() {
         packMan = new PackMan(0, 0, 20);
-        //packMan.setBorders(g, wallX, wallY, wallWidth, wallHeight);
-        board = new Board(25,14, packMan.getSize(), 1);
-        board.setPackMan(packMan, 0,0);
-        board.drawBoard(g,packMan);
-
-//        add(buttonStart, BorderLayout.NORTH);
-//        add(labelStart,BorderLayout.CENTER);
-//        buttonStart.addActionListener(e -> {
-//            labelStart.setText(labelStart.getText() + "|");
-//        });
+        board = new Board(25, 14, packMan.getSize(), 1);
+        board.setPackMan(packMan, 0, 0);
+        g = getGraphics();
+        board.drawBoard(g, packMan);
     }
 
-    public void paint(Graphics my_picture) {
-//        my_picture.drawLine(10,40, 1000,40);
-//        my_picture.drawRect(wallX, wallY, wallWidth, wallHeight);
-//        my_picture.clearRect(0, 0, 1, 1);
-//        my_picture.drawLine(0,10,100,10);
-//        int sizeX = 3;
-//        int startX = 20;
-//        int fieldSize = 20;
-//        int startY = 50;
-//        int sizeY = 3;
-//        for (int x = 1; x < sizeX; x++) {
-//            my_picture.drawLine((startX + fieldSize * x), startY, (startX + fieldSize * x), (startY + fieldSize * sizeY));
-//            for (int y = 1; y < sizeY; y++) {
-//                my_picture.drawLine(startX, (startY + fieldSize * y), (startX + fieldSize * sizeX), (startY + fieldSize * y));
-//            }
-//        }
+    private boolean actKeyPressed(int keyCode) {
+        if (board != null) {
+            g = getGraphics();
+            switch (keyCode) {
+                case KeyEvent.VK_DOWN:
+                    keyNum += 1;
+                    board.movePackMan(g, packMan, PackMan.DIRECTION_SOUTH);
+                    return true;
+                case KeyEvent.VK_UP:
+                    board.movePackMan(g, packMan, PackMan.DIRECTION_NORTH);
+                    return true;
+                case KeyEvent.VK_RIGHT:
+                    board.movePackMan(g, packMan, PackMan.DIRECTION_EAST);
+                    return true;
+                case KeyEvent.VK_LEFT:
+                    board.movePackMan(g, packMan, PackMan.DIRECTION_WEST);
+                    return true;
+                default:
+                    return false;
+            }
+        } else {
+            return false;
+        }
     }
-
-//    private void erasePackman(int x, int y, int size) {
-//        g = getGraphics();
-//        g.clearRect(x-size, y-size, size*2+1, size*2+1);
-//    }
-//
-//    private void drawPackman(int x, int y, int size, int direction, int state) {
-//        g = getGraphics();
-//        int x1;
-//        int y1;
-//        int x2;
-//        int y2;
-//        int arcAngle;
-//        int startAngle;
-//        double angle;
-//        angle = 45.0;
-//        if (state == 1) angle = 10.0;
-//
-//        startAngle = (int) (angle + direction * 90);
-//        arcAngle = (int) (360 - angle * 2);
-//
-//
-//        if ((direction == 2) || (direction == 3)) angle += 180;
-//        if ((direction == 0) || (direction == 2)) {
-//            x1 = x + (int) (size * Math.cos(Math.toRadians(angle)));
-//            y1 = y - (int) (size * Math.sin(Math.toRadians(angle)));
-//            x2 = x + (int) (size * Math.cos(Math.toRadians(angle)));
-//            y2 = y + (int) (size * Math.sin(Math.toRadians(angle)));
-//
-//        } else {
-//            x1 = x - (int) (size * Math.sin(Math.toRadians(angle)));
-//            y1 = y - (int) (size * Math.cos(Math.toRadians(angle)));
-//            x2 = x + (int) (size * Math.sin(Math.toRadians(angle)));
-//            y2 = y - (int) (size * Math.cos(Math.toRadians(angle)));
-//        }
-//        g.drawLine(x, y, x1, y1);
-//        g.drawLine(x, y, x2, y2);
-//        g.drawArc(x - size, y - size, size * 2, size * 2, startAngle, arcAngle);
-//    }
 }

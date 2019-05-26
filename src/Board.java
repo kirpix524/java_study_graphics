@@ -1,6 +1,8 @@
+import javax.swing.*;
 import java.awt.*;
 
-public class Board {
+public class Board{
+    private Graphics gBoard;
     private int dimX, dimY, size, startX, startY;
 
     private int curPackManX, curPackManY;
@@ -17,7 +19,6 @@ public class Board {
         this.dimX = dimX;
         this.dimY = dimY;
         this.curPackManX = 0;
-        this.curPackManY = 0;
         loadLevel(level);
     }
 
@@ -188,6 +189,5 @@ public class Board {
         curPackManY = newFieldY;
         packMan.changePackmanCoordinates(newX, newY);
         redrawObjectInField(g, packMan, curPackManX, curPackManY);
-
     }
 }
