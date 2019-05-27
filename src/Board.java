@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.event.KeyEvent;
+import java.io.*;
 
 public class Board {
     private Graphics gBoard;
@@ -19,14 +18,14 @@ public class Board {
         public int y;
     }
 
-    public Board(int dimX, int dimY, int size, int level) {
-        init(dimX, dimY, size, level);
+    public Board(int dimX, int dimY, int startX, int startY, int size, int level) {
+        init(dimX, dimY, startX, startY, size, level);
     }
 
-    private void init(int dimX, int dimY, int size, int level) {
+    private void init(int dimX, int dimY, int startX, int startY, int size, int level) {
         this.size = size;
-        this.startX = 20;
-        this.startY = 50;
+        this.startX = startX;
+        this.startY = startY;
         this.dimX = dimX;
         this.dimY = dimY;
         this.curPackManX = 0;
@@ -48,7 +47,7 @@ public class Board {
             }
 
         }
-        if (level==0) {
+        if (level == 0) {
             field = new GameObject[dimY][dimX];
             for (int x = 0; x < dimX; x++) {
                 for (int y = 0; y < dimY; y++) {
@@ -138,7 +137,7 @@ public class Board {
     public void redrawObjectInField(Graphics g, PackMan packMan, int fieldX, int fieldY) {
         GameObject obj;
         obj = field[fieldY][fieldX];
-        if (obj.isPackManHere()&&(packMan!=null)) {
+        if (obj.isPackManHere() && (packMan != null)) {
             drawEmptyField(g, fieldX, fieldY);
             packMan.drawPackMan(g);
             return;
@@ -213,7 +212,7 @@ public class Board {
     public void changeElementOnField(Graphics g, int x, int y) {
         FieldXY fieldXY = getFieldByCoordinate(x, y);
 //        JOptionPane.showMessageDialog(new JFrame(), "fieldX: " + fieldXY.x + " fieldY: " + fieldXY.y);
-        if (field[fieldXY.y][fieldXY.x].getObjectType()!=lastChangedType) {
+        if (field[fieldXY.y][fieldXY.x].getObjectType() != lastChangedType) {
             field[fieldXY.y][fieldXY.x].changeObjectType(lastChangedType);
         } else {
             int newType = GameObject.TYPE_EMPTY;
@@ -232,45 +231,78 @@ public class Board {
                     break;
             }
             field[fieldXY.y][fieldXY.x].changeObjectType(newType);
-            lastChangedType=newType;
+            lastChangedType = newType;
         }
-        redrawObjectInField(g,null,fieldXY.x, fieldXY.y);
+        redrawObjectInField(g, null, fieldXY.x, fieldXY.y);
     }
 
     private FieldXY getFieldByCoordinate(int x, int y) {
         FieldXY fieldXY = new FieldXY();
-        fieldXY.x = correctField((int) ((x - startX) / (size * 2)),'x');
-        fieldXY.y = correctField((int) ((y - startY) / (size * 2)),'y');
+        fieldXY.x = correctField((int) ((x - startX) / (size * 2)), 'x');
+        fieldXY.y = correctField((int) ((y - startY) / (size * 2)), 'y');
         return fieldXY;
     }
 
     public void saveToFile() {
 //        JOptionPane.showMessageDialog(new JFrame(), "file name: "+fileName);
-        String fileName="";
+        String fileName = "";
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(levelPath));
-        if (fileChooser.showSaveDialog(new JFrame())==JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showSaveDialog(new JFrame()) == JFileChooser.APPROVE_OPTION) {
             fileName = fileChooser.getSelectedFile().getAbsolutePath();
         } else {
             return;
         }
 
         try (FileWriter writer = new FileWriter(fileName, false)) {
-            writer.write("dim "+dimX+" "+dimY+"\n");
-            for (int x=0; x<dimX; x++) {
-                for (int y=0; y<dimY; y++) {
+            writer.write("dim " + dimX + " " + dimY + "\n");
+            for (int x = 0; x < dimX; x++) {
+                for (int y = 0; y < dimY; y++) {
                     GameObject obj = field[y][x];
-                    writer.write("obj "+x+" "+y+" "+obj.getObjectType()+"\n");
+                    writer.write("obj " + x + " " + y + " " + obj.getObjectType() + "\n");
 
                 }
             }
             writer.flush();
-        } catch(IOException ex) {
-            JOptionPane.showMessageDialog(new JFrame(), "Ошибка: "+ex.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ошибка: " + ex.toString());
             return;
         }
         JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
     }
 
+    public void loadFromFile() {
+        String fileName = "";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(levelPath));
+        if (fileChooser.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION) {
+            fileName = fileChooser.getSelectedFile().getAbsolutePath();
+        } else {
+            return;
+        }
+
+        try (FileReader reader = new FileReader(fileName)) {
+            int c;
+            String s = "";
+            String[] sArray;
+            while ((c = reader.read()) != -1) {
+                if (c == KeyEvent.VK_ENTER) {
+                    sArray = s.split(" ");
+                    if (sArray[0].equals("obj")) {
+                        int x = correctField(Integer.parseInt(sArray[1]), 'x');
+                        int y = correctField(Integer.parseInt(sArray[2]), 'y');
+                        field[y][x].changeObjectType(Integer.parseInt(sArray[3]));
+                    }
+                    s = "";
+                } else {
+                    s += (char) c;
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ошибка: " + ex.toString());
+        }
+
+        JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
+    }
 
 }

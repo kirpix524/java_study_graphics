@@ -5,14 +5,16 @@ import java.awt.event.*;
 public class FormMain extends JFrame {
     private Graphics g;
     private PackMan packMan;
-    private int packManSize = 20;
     private Board board;
     private Board boardTemplate;
     private boolean editorModeOn = false;
-    private int wallX = 30;
-    private int wallY = 50;
-    private int wallHeight = 500;
-    private int wallWidth = 1000;
+//
+    private final int packManSize = 20;
+    private final int dimX=25;
+    private final int dimY=14;
+    private final int startX=20;
+    private final int startY=50;
+
 
     private class MyKeyDispatcher implements KeyEventDispatcher {
         @Override
@@ -166,6 +168,9 @@ public class FormMain extends JFrame {
         jbBackToMainMenu.setFocusable(false);
         jbBackToMainMenu.addActionListener(e -> {
             ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpMainMenu");
+            boardTemplate = null;
+            board = null;
+            clearField();
         });
         jpPlaying.add(jbBackToMainMenu);
         return jpPlaying;
@@ -177,7 +182,9 @@ public class FormMain extends JFrame {
         JButton jbLoadMapFromFile = new JButton("Загрузить из файла");
         jbLoadMapFromFile.setFont(btnFont);
         jbLoadMapFromFile.addActionListener(e -> {
-
+            boardTemplate.loadFromFile();
+            g = getGraphics();
+            boardTemplate.drawBoard(g, null);
         });
         jpEditMap.add(jbLoadMapFromFile);
         //button save to file
@@ -192,6 +199,9 @@ public class FormMain extends JFrame {
         jbBackToMainMenu.setFont(btnFont);
         jbBackToMainMenu.addActionListener(e -> {
             ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpMainMenu");
+            boardTemplate = null;
+            board = null;
+            clearField();
         });
         jpEditMap.add(jbBackToMainMenu);
         return jpEditMap;
@@ -208,14 +218,14 @@ public class FormMain extends JFrame {
 
     private void newGame() {
         packMan = new PackMan(0, 0, packManSize);
-        board = new Board(25, 14, packManSize, 1);
+        board = new Board(dimX, dimY, startX,startY, packManSize, 1);
         board.setPackMan(packMan, 0, 0);
         g = getGraphics();
         board.drawBoard(g, packMan);
     }
 
     private void startEditor() {
-        boardTemplate = new Board(25, 14, packManSize, 0);
+        boardTemplate = new Board(dimX, dimY,startX,startY, packManSize, 0);
         g = getGraphics();
         boardTemplate.drawBoard(g, null);
         editorModeOn = true;
@@ -247,5 +257,10 @@ public class FormMain extends JFrame {
         } else {
             return false;
         }
+    }
+
+    private void clearField() {
+        g=getGraphics();
+        g.clearRect(0,0, startX+dimX*packManSize*2+5, startY+dimY*packManSize*2+5);
     }
 }
