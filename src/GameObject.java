@@ -1,4 +1,4 @@
-public  class GameObject {
+public class GameObject {
     public static final int TYPE_EMPTY = 0;
     public static final int TYPE_FILLED_DOT = 1;
     public static final int TYPE_BONUS = 2;
@@ -13,49 +13,47 @@ public  class GameObject {
     private int objectType;
     private boolean isPackManHere;
 
-    public GameObject(int objectType, int scoreAmount) {
-        init(objectType, scoreAmount);
+    public GameObject(int objectType) {
+        init(objectType, getScoreAmount(objectType));
+    }
+
+    private int getScoreAmount(int objectType) {
+        switch (objectType) {
+            case (TYPE_WALL):
+                return SCORE_WALL;
+            case (TYPE_FILLED_DOT):
+                return SCORE_FILLED;
+            case (TYPE_BONUS):
+                return SCORE_BONUS;
+            case (TYPE_EMPTY):
+                return SCORE_EMPTY;
+            default:
+                return 0;
+        }
     }
 
     public void changeObjectType(int newObjectType) {
         newObjectType = correctObjectType(newObjectType);
-        int newScoreAmount = 0;
-        switch (newObjectType) {
-            case (TYPE_WALL):
-                newScoreAmount = SCORE_WALL;
-                break;
-            case (TYPE_FILLED_DOT):
-                newScoreAmount = SCORE_FILLED;
-                break;
-            case (TYPE_BONUS):
-                newScoreAmount = SCORE_BONUS;
-                break;
-            case (TYPE_EMPTY):
-                newScoreAmount =SCORE_EMPTY;
-                break;
-            default:
-                break;
-        }
         this.objectType = newObjectType;
-        this.scoreAmount = newScoreAmount;
+        this.scoreAmount = getScoreAmount(newObjectType);
     }
 
     public boolean isEatable() {
-        if ((objectType==TYPE_FILLED_DOT)||(objectType==TYPE_BONUS)) {
+        if ((objectType == TYPE_FILLED_DOT) || (objectType == TYPE_BONUS)) {
             return true;
         }
         return false;
     }
 
     public boolean isPassable() {
-        if (objectType==TYPE_WALL) {
+        if (objectType == TYPE_WALL) {
             return false;
         }
         return true;
     }
 
     public int getScoreAmount() {
-        if ((objectType==TYPE_EMPTY)||(objectType==TYPE_WALL)) {
+        if ((objectType == TYPE_EMPTY) || (objectType == TYPE_WALL)) {
             return 0;
         }
         return scoreAmount;
@@ -76,9 +74,10 @@ public  class GameObject {
     public void packManGoesOut() {
         packManGoesOut(0);
     }
+
     public void packManGoesOut(int teleport) {
         isPackManHere = false;
-        if (teleport!=1) {
+        if (teleport != 1) {
             this.changeObjectType(TYPE_EMPTY);
         }
     }
@@ -89,14 +88,14 @@ public  class GameObject {
     }
 
     private int correctObjectType(int newObjectType) {
-        if ((newObjectType!=TYPE_BONUS)&&(newObjectType!=TYPE_EMPTY)&&(newObjectType!=TYPE_FILLED_DOT)&&(newObjectType!=TYPE_WALL)) {
+        if ((newObjectType != TYPE_BONUS) && (newObjectType != TYPE_EMPTY) && (newObjectType != TYPE_FILLED_DOT) && (newObjectType != TYPE_WALL)) {
             return TYPE_EMPTY;
         }
         return newObjectType;
     }
 
     private int correctScoreAmount(int scoreAmount) {
-        if (scoreAmount<0) {
+        if (scoreAmount < 0) {
             return 0;
         }
         return scoreAmount;

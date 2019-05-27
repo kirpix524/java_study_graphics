@@ -8,12 +8,12 @@ public class FormMain extends JFrame {
     private Board board;
     private Board boardTemplate;
     private boolean editorModeOn = false;
-//
+    //
     private final int packManSize = 20;
-    private final int dimX=25;
-    private final int dimY=14;
-    private final int startX=20;
-    private final int startY=50;
+    private final int dimX = 25;
+    private final int dimY = 14;
+    private final int startX = 20;
+    private final int startY = 50;
 
 
     private class MyKeyDispatcher implements KeyEventDispatcher {
@@ -42,23 +42,6 @@ public class FormMain extends JFrame {
 
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new MyKeyDispatcher());
-
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                JOptionPane.showMessageDialog(new JFrame(), "key " + e.getKeyCode() + " pressed");
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
 
         setVisible(true);
         init();
@@ -122,7 +105,7 @@ public class FormMain extends JFrame {
         jbStart.setFocusable(false);
         jbStart.addActionListener(e -> {
             ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpPlaying");
-            newGame();
+            newGame(false, false);
         });
         jpMainMenu.add(jbStart);
         //button editMap
@@ -152,7 +135,7 @@ public class FormMain extends JFrame {
         jbRestart.setFont(btnFont);
         jbRestart.setFocusable(false);
         jbRestart.addActionListener(e -> {
-            newGame();
+            newGame(false, true);
         });
         jpPlaying.add(jbRestart);
         //button changeMap
@@ -160,7 +143,7 @@ public class FormMain extends JFrame {
         jbChangeMap.setFont(btnFont);
         jbChangeMap.setFocusable(false);
         jbChangeMap.addActionListener(e -> {
-
+            newGame(true, false);
         });
         jpPlaying.add(jbChangeMap);
         //button backToMainMenu
@@ -216,16 +199,25 @@ public class FormMain extends JFrame {
 
     }
 
-    private void newGame() {
+    private void newGame(boolean changeMap, boolean restart) {
         packMan = new PackMan(0, 0, packManSize);
-        board = new Board(dimX, dimY, startX,startY, packManSize, 1);
+        if (restart) {
+            board.restartMap();
+        } else {
+            board = new Board(dimX, dimY, startX, startY, packManSize, 1);
+            if (changeMap) {
+                if (!board.loadFromFile()) {
+                    return;
+                }
+            }
+        }
         board.setPackMan(packMan, 0, 0);
         g = getGraphics();
         board.drawBoard(g, packMan);
     }
 
     private void startEditor() {
-        boardTemplate = new Board(dimX, dimY,startX,startY, packManSize, 0);
+        boardTemplate = new Board(dimX, dimY, startX, startY, packManSize, 0);
         g = getGraphics();
         boardTemplate.drawBoard(g, null);
         editorModeOn = true;
@@ -260,7 +252,7 @@ public class FormMain extends JFrame {
     }
 
     private void clearField() {
-        g=getGraphics();
-        g.clearRect(0,0, startX+dimX*packManSize*2+5, startY+dimY*packManSize*2+5);
+        g = getGraphics();
+        g.clearRect(0, 0, startX + dimX * packManSize * 2 + 5, startY + dimY * packManSize * 2 + 5);
     }
 }

@@ -8,6 +8,7 @@ public class Board {
     private int dimX, dimY, size, startX, startY;
 
     private String levelPath = "C:/git/java_study_graphics/level";
+    private String currentMapPath = "";
 
     private int lastChangedType = GameObject.TYPE_EMPTY;
     private int curPackManX, curPackManY;
@@ -29,32 +30,18 @@ public class Board {
         this.dimX = dimX;
         this.dimY = dimY;
         this.curPackManX = 0;
+        this.curPackManY = 0;
+        this.field = new GameObject[dimY][dimX];
         loadLevel(level);
     }
 
     private void loadLevel(int level) {
         if (level == 1) {
-            field = new GameObject[dimY][dimX];
-            for (int x = 0; x < dimX; x++) {
-                for (int y = 0; y < dimY; y++) {
-                    field[y][x] = new GameObject(GameObject.TYPE_FILLED_DOT, 0);
-                }
-            }
-            for (int x = 1; x < dimX - 1; x++) {
-                for (int y = 1; y < dimY - 1; y += 2) {
-                    field[y][x].changeObjectType(GameObject.TYPE_WALL);
-                }
-            }
+            loadFromFile(levelPath + "/level1.txt", true);
+            return;
+        }
+        loadFromFile(levelPath+"/levelEmpty.txt", true);
 
-        }
-        if (level == 0) {
-            field = new GameObject[dimY][dimX];
-            for (int x = 0; x < dimX; x++) {
-                for (int y = 0; y < dimY; y++) {
-                    field[y][x] = new GameObject(GameObject.TYPE_FILLED_DOT, 0);
-                }
-            }
-        }
     }
 
     private void drawWall(Graphics g, int fieldX, int fieldY) {
@@ -271,16 +258,7 @@ public class Board {
         JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
     }
 
-    public void loadFromFile() {
-        String fileName = "";
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(levelPath));
-        if (fileChooser.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION) {
-            fileName = fileChooser.getSelectedFile().getAbsolutePath();
-        } else {
-            return;
-        }
-
+    public boolean loadFromFile(String fileName, boolean quiet) {
         try (FileReader reader = new FileReader(fileName)) {
             int c;
             String s = "";
@@ -291,18 +269,40 @@ public class Board {
                     if (sArray[0].equals("obj")) {
                         int x = correctField(Integer.parseInt(sArray[1]), 'x');
                         int y = correctField(Integer.parseInt(sArray[2]), 'y');
-                        field[y][x].changeObjectType(Integer.parseInt(sArray[3]));
+                        field[y][x]= new GameObject(Integer.parseInt(sArray[3]));
                     }
                     s = "";
                 } else {
-                    s += (char) c;
+                    if ((char)c!='\r') {
+                        s += (char) c;
+                    }
                 }
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Ошибка: " + ex.toString());
+            return false;
         }
 
-        JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
+        currentMapPath = fileName;
+        if (!quiet) {
+            JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
+        }
+        return true;
     }
 
+    public boolean loadFromFile() {
+        String fileName;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(levelPath));
+        if (fileChooser.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION) {
+            fileName = fileChooser.getSelectedFile().getAbsolutePath();
+        } else {
+            return false;
+        }
+        return loadFromFile(fileName, false);
+    }
+
+    public void restartMap() {
+        loadFromFile(currentMapPath, true);
+    }
 }
