@@ -1,12 +1,18 @@
-import javax.swing.*;
 import java.awt.*;
 
-public class Board{
+public class Board {
     private Graphics gBoard;
     private int dimX, dimY, size, startX, startY;
 
+
+    private int lastChangedType = GameObject.TYPE_EMPTY;
     private int curPackManX, curPackManY;
     private GameObject[][] field;
+
+    private class FieldXY {
+        public int x;
+        public int y;
+    }
 
     public Board(int dimX, int dimY, int size, int level) {
         init(dimX, dimY, size, level);
@@ -32,10 +38,18 @@ public class Board{
             }
             for (int x = 1; x < dimX - 1; x++) {
                 for (int y = 1; y < dimY - 1; y += 2) {
-                    field[y][x].changeObjectType(GameObject.TYPE_WALL, 0);
+                    field[y][x].changeObjectType(GameObject.TYPE_WALL);
                 }
             }
 
+        }
+        if (level==0) {
+            field = new GameObject[dimY][dimX];
+            for (int x = 0; x < dimX; x++) {
+                for (int y = 0; y < dimY; y++) {
+                    field[y][x] = new GameObject(GameObject.TYPE_FILLED_DOT, 0);
+                }
+            }
         }
     }
 
@@ -84,7 +98,7 @@ public class Board{
     private void drawEmptyField(Graphics g, int fieldX, int fieldY) {
         int x = startX + (fieldX) * size * 2;
         int y = startY + (fieldY) * size * 2;
-        g.clearRect(x, y, size * 2+1, size * 2+1);
+        g.clearRect(x, y, size * 2 + 1, size * 2 + 1);
     }
 
     private void drawGameObject(Graphics g, GameObject obj, int fieldX, int fieldY) {
@@ -119,8 +133,8 @@ public class Board{
     public void redrawObjectInField(Graphics g, PackMan packMan, int fieldX, int fieldY) {
         GameObject obj;
         obj = field[fieldY][fieldX];
-        if (obj.isPackManHere()) {
-            drawEmptyField(g,fieldX,fieldY);
+        if (obj.isPackManHere()&&(packMan!=null)) {
+            drawEmptyField(g, fieldX, fieldY);
             packMan.drawPackMan(g);
             return;
         }
@@ -166,11 +180,11 @@ public class Board{
                 newFieldY += 1;
                 break;
         }
-        if ((newFieldX<0)||(newFieldX>=dimX)) {
+        if ((newFieldX < 0) || (newFieldX >= dimX)) {
             redrawObjectInField(g, packMan, curPackManX, curPackManY);
             return;
         }
-        if ((newFieldY<0)||(newFieldY>=dimY)) {
+        if ((newFieldY < 0) || (newFieldY >= dimY)) {
             redrawObjectInField(g, packMan, curPackManX, curPackManY);
             return;
         }
@@ -190,4 +204,40 @@ public class Board{
         packMan.changePackmanCoordinates(newX, newY);
         redrawObjectInField(g, packMan, curPackManX, curPackManY);
     }
+
+    public void changeElementOnField(Graphics g, int x, int y) {
+        FieldXY fieldXY = getFieldByCoordinate(x, y);
+//        JOptionPane.showMessageDialog(new JFrame(), "fieldX: " + fieldXY.x + " fieldY: " + fieldXY.y);
+        if (field[fieldXY.y][fieldXY.x].getObjectType()!=lastChangedType) {
+            field[fieldXY.y][fieldXY.x].changeObjectType(lastChangedType);
+        } else {
+            int newType = GameObject.TYPE_EMPTY;
+            switch (field[fieldXY.y][fieldXY.x].getObjectType()) {
+                case GameObject.TYPE_FILLED_DOT:
+                    newType = GameObject.TYPE_BONUS;
+                    break;
+                case (GameObject.TYPE_BONUS):
+                    newType = GameObject.TYPE_WALL;
+                    break;
+                case (GameObject.TYPE_WALL):
+                    newType = GameObject.TYPE_EMPTY;
+                    break;
+                case (GameObject.TYPE_EMPTY):
+                    newType = GameObject.TYPE_FILLED_DOT;
+                    break;
+            }
+            field[fieldXY.y][fieldXY.x].changeObjectType(newType);
+            lastChangedType=newType;
+        }
+        redrawObjectInField(g,null,fieldXY.x, fieldXY.y);
+    }
+
+    private FieldXY getFieldByCoordinate(int x, int y) {
+        FieldXY fieldXY = new FieldXY();
+        fieldXY.x = correctField((int) ((x - startX) / (size * 2)),'x');
+        fieldXY.y = correctField((int) ((y - startY) / (size * 2)),'y');
+        return fieldXY;
+    }
+
+
 }

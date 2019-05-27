@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class FormMain extends JFrame{
+public class FormMain extends JFrame {
     private Graphics g;
-    private int keyNum = 0;
     private PackMan packMan;
+    private int packManSize = 20;
     private Board board;
+    private Board boardTemplate;
+    private boolean editorModeOn = false;
     private int wallX = 30;
     private int wallY = 50;
     private int wallHeight = 500;
@@ -15,7 +17,7 @@ public class FormMain extends JFrame{
     private class MyKeyDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            if (e.getID()==KeyEvent.KEY_PRESSED) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
                 return actKeyPressed(e.getKeyCode());
             }
             return false;
@@ -23,6 +25,7 @@ public class FormMain extends JFrame{
     }
 
     private Font btnFont = new Font("Times New Roman", Font.PLAIN, 16);
+
     public FormMain() {
         setSize(1300, 700);
         setResizable(false);
@@ -33,7 +36,7 @@ public class FormMain extends JFrame{
 
 //        setBounds(10, 10, 1300, 700);
 
-//        initListeners();
+        initListeners();
 
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new MyKeyDispatcher());
@@ -46,7 +49,7 @@ public class FormMain extends JFrame{
 
             @Override
             public void keyPressed(KeyEvent e) {
-                JOptionPane.showMessageDialog(new JFrame(), "key "+e.getKeyCode()+" pressed");
+                JOptionPane.showMessageDialog(new JFrame(), "key " + e.getKeyCode() + " pressed");
             }
 
             @Override
@@ -67,8 +70,12 @@ public class FormMain extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    String msg = "x: " + e.getX() + " y:" + e.getY();
-                    JOptionPane.showMessageDialog(new JFrame(), msg);
+                    if (editorModeOn) {
+                        g = getGraphics();
+                        changeElement(g, e.getX(), e.getY());
+                    }
+//                    String msg = "x: " + e.getX() + " y:" + e.getY();
+//                    JOptionPane.showMessageDialog(new JFrame(), msg);
 //                    g = getGraphics();
                 }
 
@@ -122,7 +129,7 @@ public class FormMain extends JFrame{
         jbEditMap.setFocusable(false);
         jbEditMap.addActionListener(e -> {
             ((CardLayout) jpBottom.getLayout()).show(jpBottom, "jpEditMap");
-
+            startEditor();
         });
         jpMainMenu.add(jbEditMap);
         //button Exit
@@ -200,11 +207,22 @@ public class FormMain extends JFrame{
     }
 
     private void newGame() {
-        packMan = new PackMan(0, 0, 20);
-        board = new Board(25, 14, packMan.getSize(), 1);
+        packMan = new PackMan(0, 0, packManSize);
+        board = new Board(25, 14, packManSize, 1);
         board.setPackMan(packMan, 0, 0);
         g = getGraphics();
         board.drawBoard(g, packMan);
+    }
+
+    private void startEditor() {
+        boardTemplate = new Board(25, 14, packManSize, 0);
+        g = getGraphics();
+        boardTemplate.drawBoard(g, null);
+        editorModeOn = true;
+    }
+
+    private void changeElement(Graphics g, int x, int y) {
+        boardTemplate.changeElementOnField(g, x, y);
     }
 
     private boolean actKeyPressed(int keyCode) {
@@ -212,7 +230,6 @@ public class FormMain extends JFrame{
             g = getGraphics();
             switch (keyCode) {
                 case KeyEvent.VK_DOWN:
-                    keyNum += 1;
                     board.movePackMan(g, packMan, PackMan.DIRECTION_SOUTH);
                     return true;
                 case KeyEvent.VK_UP:

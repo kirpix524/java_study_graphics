@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ec48d7c4-0469-41d4-90ea-7fecc3d65ff1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java_study_graphics/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java_study_graphics/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/java_study_graphics/FormMain.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FormMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FormMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameObject.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,7 +22,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
+            <state relative-caret-position="17">
               <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
               <folding>
                 <element signature="e#63#64#0" expanded="true" />
@@ -38,13 +35,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FormMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="213" column="38" selection-start-line="213" selection-start-column="38" selection-end-line="213" selection-end-column="38" />
+            <state relative-caret-position="353">
+              <caret line="220" column="28" lean-forward="true" selection-start-line="220" selection-start-column="28" selection-end-line="220" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1382#1870#0" expanded="true" />
-                <element signature="e#1869#1870#0" expanded="true" />
-                <element signature="e#4738#5572#0" />
+                <element signature="method#initMenu#0;class#FormMain#0" />
+                <element signature="method#addBottomMenu#0;class#FormMain#0" />
+                <element signature="method#addMainMenu#0;class#FormMain#0" />
+                <element signature="method#addPlayMenu#0;class#FormMain#0" />
+                <element signature="method#addEditorMenu#0;class#FormMain#0" />
+                <element signature="e#7167#7168#0" expanded="true" />
+                <element signature="e#7219#7220#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PackMan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+            <state relative-caret-position="-493">
+              <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
               <folding>
                 <element signature="method#PackMan#3;class#PackMan#0" />
                 <element signature="method#init#0;class#PackMan#0" />
@@ -76,16 +77,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="187" column="32" selection-start-line="187" selection-start-column="32" selection-end-line="187" selection-end-column="32" />
+            <state relative-caret-position="123">
+              <caret line="143" column="41" selection-start-line="143" selection-start-column="41" selection-end-line="143" selection-end-column="41" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#loadLevel#0;class#Board#0" />
                 <element signature="method#drawWall#0;class#Board#0" />
                 <element signature="method#drawFilledDot#0;class#Board#0" />
                 <element signature="method#drawBonus#0;class#Board#0" />
+                <element signature="method#drawEmptyField#0;class#Board#0" />
                 <element signature="method#drawGameObject#0;class#Board#0" />
                 <element signature="method#correctField#0;class#Board#0" />
+                <element signature="method#setPackMan#0;class#Board#0" />
+                <element signature="method#movePackMan#0;class#Board#0" />
               </folding>
             </state>
           </provider>
@@ -94,12 +96,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="184">
+              <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
               <folding>
+                <element signature="method#changeObjectType#0;class#GameObject#0" />
                 <element signature="method#isEatable#0;class#GameObject#0" />
                 <element signature="method#isPassable#0;class#GameObject#0" />
                 <element signature="method#getScoreAmount#0;class#GameObject#0" />
+                <element signature="e#1294#1295#0" expanded="true" />
                 <element signature="e#1327#1328#0" expanded="true" />
                 <element signature="e#1365#1366#0" expanded="true" />
                 <element signature="e#1401#1402#0" expanded="true" />
@@ -134,12 +138,12 @@
       <list>
         <option value="$PROJECT_DIR$/src/Result.java" />
         <option value="$PROJECT_DIR$/src/Forms/FormMain.java" />
-        <option value="$PROJECT_DIR$/src/GameObject.java" />
         <option value="$PROJECT_DIR$/src/PackMan.java" />
         <option value="$PROJECT_DIR$/src/MyWindow.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/MyKeyboardDispatcher.java" />
+        <option value="$PROJECT_DIR$/src/GameObject.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/FormMain.java" />
       </list>
     </option>
@@ -158,6 +162,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -180,7 +185,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -231,7 +235,7 @@
     <frame x="1358" y="-8" width="1696" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27017114" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2732274" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -258,18 +262,6 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/PackMan.java</url>
-          <line>88</line>
-          <properties />
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/javax/swing/JFrame.java">
@@ -352,25 +344,6 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="method#isEatable#0;class#GameObject#0" />
-            <element signature="method#isPassable#0;class#GameObject#0" />
-            <element signature="method#getScoreAmount#0;class#GameObject#0" />
-            <element signature="e#1327#1328#0" expanded="true" />
-            <element signature="e#1365#1366#0" expanded="true" />
-            <element signature="e#1401#1402#0" expanded="true" />
-            <element signature="e#1508#1509#0" expanded="true" />
-            <element signature="e#1541#1542#0" expanded="true" />
-            <element signature="method#init#0;class#GameObject#0" />
-            <element signature="method#correctScoreAmount#0;class#GameObject#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/System.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -382,18 +355,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="114" column="5" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1874#1875#0" expanded="true" />
-            <element signature="e#1920#1921#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyWindow.java" />
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/event/KeyAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -408,61 +370,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-          <folding>
-            <element signature="e#63#64#0" expanded="true" />
-            <element signature="e#113#114#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PackMan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-          <folding>
-            <element signature="method#PackMan#3;class#PackMan#0" />
-            <element signature="method#init#0;class#PackMan#0" />
-            <element signature="method#erasePackMan#0;class#PackMan#0" />
-            <element signature="e#3417#3418#0" expanded="true" />
-            <element signature="e#3464#3465#0" expanded="true" />
-            <element signature="method#changePosition#0;class#PackMan#0" />
-            <element signature="e#4304#4305#0" expanded="true" />
-            <element signature="e#4349#4350#0" expanded="true" />
-            <element signature="method#movePackMan#1;class#PackMan#0" />
-            <element signature="method#putPackManInTheField#0;class#PackMan#0" />
-            <element signature="method#setBorderCoordinates#0;class#PackMan#0" />
-            <element signature="method#setBorders#0;class#PackMan#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyKeyboardDispatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="187" column="32" selection-start-line="187" selection-start-column="32" selection-end-line="187" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#loadLevel#0;class#Board#0" />
-            <element signature="method#drawWall#0;class#Board#0" />
-            <element signature="method#drawFilledDot#0;class#Board#0" />
-            <element signature="method#drawBonus#0;class#Board#0" />
-            <element signature="method#drawGameObject#0;class#Board#0" />
-            <element signature="method#correctField#0;class#Board#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyKeyboardDispatcher.java" />
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.desktop/java/awt/KeyboardFocusManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="344">
@@ -496,15 +404,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+          <folding>
+            <element signature="e#63#64#0" expanded="true" />
+            <element signature="e#113#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PackMan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493">
+          <caret line="13" column="26" lean-forward="true" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <element signature="method#PackMan#3;class#PackMan#0" />
+            <element signature="method#init#0;class#PackMan#0" />
+            <element signature="method#erasePackMan#0;class#PackMan#0" />
+            <element signature="e#3417#3418#0" expanded="true" />
+            <element signature="e#3464#3465#0" expanded="true" />
+            <element signature="method#changePosition#0;class#PackMan#0" />
+            <element signature="e#4304#4305#0" expanded="true" />
+            <element signature="e#4349#4350#0" expanded="true" />
+            <element signature="method#movePackMan#1;class#PackMan#0" />
+            <element signature="method#putPackManInTheField#0;class#PackMan#0" />
+            <element signature="method#setBorderCoordinates#0;class#PackMan#0" />
+            <element signature="method#setBorders#0;class#PackMan#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+          <folding>
+            <element signature="method#changeObjectType#0;class#GameObject#0" />
+            <element signature="method#isEatable#0;class#GameObject#0" />
+            <element signature="method#isPassable#0;class#GameObject#0" />
+            <element signature="method#getScoreAmount#0;class#GameObject#0" />
+            <element signature="e#1294#1295#0" expanded="true" />
+            <element signature="e#1327#1328#0" expanded="true" />
+            <element signature="e#1365#1366#0" expanded="true" />
+            <element signature="e#1401#1402#0" expanded="true" />
+            <element signature="e#1508#1509#0" expanded="true" />
+            <element signature="e#1541#1542#0" expanded="true" />
+            <element signature="method#init#0;class#GameObject#0" />
+            <element signature="method#correctScoreAmount#0;class#GameObject#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="143" column="41" selection-start-line="143" selection-start-column="41" selection-end-line="143" selection-end-column="41" />
+          <folding>
+            <element signature="method#drawWall#0;class#Board#0" />
+            <element signature="method#drawFilledDot#0;class#Board#0" />
+            <element signature="method#drawBonus#0;class#Board#0" />
+            <element signature="method#drawEmptyField#0;class#Board#0" />
+            <element signature="method#drawGameObject#0;class#Board#0" />
+            <element signature="method#correctField#0;class#Board#0" />
+            <element signature="method#setPackMan#0;class#Board#0" />
+            <element signature="method#movePackMan#0;class#Board#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FormMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="213" column="38" selection-start-line="213" selection-start-column="38" selection-end-line="213" selection-end-column="38" />
+        <state relative-caret-position="353">
+          <caret line="220" column="28" lean-forward="true" selection-start-line="220" selection-start-column="28" selection-end-line="220" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1382#1870#0" expanded="true" />
-            <element signature="e#1869#1870#0" expanded="true" />
-            <element signature="e#4738#5572#0" />
+            <element signature="method#initMenu#0;class#FormMain#0" />
+            <element signature="method#addBottomMenu#0;class#FormMain#0" />
+            <element signature="method#addMainMenu#0;class#FormMain#0" />
+            <element signature="method#addPlayMenu#0;class#FormMain#0" />
+            <element signature="method#addEditorMenu#0;class#FormMain#0" />
+            <element signature="e#7167#7168#0" expanded="true" />
+            <element signature="e#7219#7220#0" expanded="true" />
           </folding>
         </state>
       </provider>

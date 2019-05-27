@@ -1,8 +1,13 @@
 public  class GameObject {
-    public static int TYPE_EMPTY = 0;
-    public static int TYPE_FILLED_DOT = 1;
-    public static int TYPE_BONUS = 2;
-    public static int TYPE_WALL = 3;
+    public static final int TYPE_EMPTY = 0;
+    public static final int TYPE_FILLED_DOT = 1;
+    public static final int TYPE_BONUS = 2;
+    public static final int TYPE_WALL = 3;
+
+    private final int SCORE_WALL = 0;
+    private final int SCORE_EMPTY = 0;
+    private final int SCORE_FILLED = 10;
+    private final int SCORE_BONUS = 100;
 
     private int scoreAmount;
     private int objectType;
@@ -12,12 +17,24 @@ public  class GameObject {
         init(objectType, scoreAmount);
     }
 
-    public void changeObjectType(int newObjectType, int newScoreAmount) {
+    public void changeObjectType(int newObjectType) {
         newObjectType = correctObjectType(newObjectType);
-        if ((newObjectType==TYPE_WALL)||(newObjectType==TYPE_EMPTY)) {
-            newScoreAmount=0;
-        } else {
-            newScoreAmount=correctScoreAmount(newScoreAmount);
+        int newScoreAmount = 0;
+        switch (newObjectType) {
+            case (TYPE_WALL):
+                newScoreAmount = SCORE_WALL;
+                break;
+            case (TYPE_FILLED_DOT):
+                newScoreAmount = SCORE_FILLED;
+                break;
+            case (TYPE_BONUS):
+                newScoreAmount = SCORE_BONUS;
+                break;
+            case (TYPE_EMPTY):
+                newScoreAmount =SCORE_EMPTY;
+                break;
+            default:
+                break;
         }
         this.objectType = newObjectType;
         this.scoreAmount = newScoreAmount;
@@ -62,7 +79,7 @@ public  class GameObject {
     public void packManGoesOut(int teleport) {
         isPackManHere = false;
         if (teleport!=1) {
-            this.changeObjectType(TYPE_EMPTY, 0);
+            this.changeObjectType(TYPE_EMPTY);
         }
     }
 
