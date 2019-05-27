@@ -184,7 +184,7 @@ public class FormMain extends JFrame {
         JButton jbSaveMapToFile = new JButton("Сохранить в файл");
         jbSaveMapToFile.setFont(btnFont);
         jbSaveMapToFile.addActionListener(e -> {
-
+            boardTemplate.saveToFile();
         });
         jpEditMap.add(jbSaveMapToFile);
         //button backToMenu

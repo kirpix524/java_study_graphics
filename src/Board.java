@@ -1,9 +1,14 @@
+import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Board {
     private Graphics gBoard;
     private int dimX, dimY, size, startX, startY;
 
+    private String levelPath = "C:/git/java_study_graphics/level";
 
     private int lastChangedType = GameObject.TYPE_EMPTY;
     private int curPackManX, curPackManY;
@@ -237,6 +242,34 @@ public class Board {
         fieldXY.x = correctField((int) ((x - startX) / (size * 2)),'x');
         fieldXY.y = correctField((int) ((y - startY) / (size * 2)),'y');
         return fieldXY;
+    }
+
+    public void saveToFile() {
+//        JOptionPane.showMessageDialog(new JFrame(), "file name: "+fileName);
+        String fileName="";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(levelPath));
+        if (fileChooser.showSaveDialog(new JFrame())==JFileChooser.APPROVE_OPTION) {
+            fileName = fileChooser.getSelectedFile().getAbsolutePath();
+        } else {
+            return;
+        }
+
+        try (FileWriter writer = new FileWriter(fileName, false)) {
+            writer.write("dim "+dimX+" "+dimY+"\n");
+            for (int x=0; x<dimX; x++) {
+                for (int y=0; y<dimY; y++) {
+                    GameObject obj = field[y][x];
+                    writer.write("obj "+x+" "+y+" "+obj.getObjectType()+"\n");
+
+                }
+            }
+            writer.flush();
+        } catch(IOException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ошибка: "+ex.toString());
+            return;
+        }
+        JOptionPane.showMessageDialog(new JFrame(), "Успешно!");
     }
 
 
